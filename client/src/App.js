@@ -1,11 +1,17 @@
-import './App.css'
+import React from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Routes from './components/Routes'
 
-function App() {
-  return (
-    <div className="App">
-        l
-    </div>
-  );
+const App = () => {
+    return (
+        <Router>
+            <Navbar/>
+            <div className='container'>
+                <Routes isAuth={false}/>
+            </div>
+        </Router>
+    )
 }
 
 export default App;

@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "mongoURI": "mongodb+srv://Klimarchuk:Vmn1-Zkldn,Sp1h!@cluster0.rrfz9.mongodb.net/tasks-mern?retryWrites=true&w=majority",
+  "jwtSecret": "Taras tasks mern"
+}
