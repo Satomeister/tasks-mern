@@ -14,20 +14,19 @@ router.post('/signup', signupValidation, async (req, res) => {
 
         if (!errors.isEmpty()) {
             return res.status(400).json({
-                errors: errors.array(),
-                message: 'invalid data'
+                errors: errors.array()
             })
         }
 
         const { email, password, name } = req.body
         const candidate = await User.findOne({ email })
         if (candidate) {
-            return res.status(400).json({ message: 'Such user is already exists' })
+            return res.status(400).json({ message: 'user with this email is already exists' })
         } else {
 
             const hashedPassword = await bcrypt.hash(password, 12)
 
-            const user = await new User({ email, password: hashedPassword, name })
+            const user = await new User({ email, password: hashedPassword, name, lists: [] })
             user.save()
 
             const token = jwt.sign(
@@ -38,7 +37,7 @@ router.post('/signup', signupValidation, async (req, res) => {
             res.status(201).json({ token })
         }
     } catch (e) {
-        return res.status(500).json({ message: 'Something went wrong', error: e.message })
+        return res.status(500).json({ message: 'something went wrong', error: e.message })
     }
 })
 
@@ -47,16 +46,15 @@ router.post('/signin', signinValidation, async (req, res) => {
         const errors = validationResult(req)
 
         if (!errors.isEmpty()) {
-            return res.json(400).json({
-                errors: errors.array(),
-                message: 'invalid data'
+            return res.status(400).json({
+                errors: errors.array()
             })
         }
 
         const { email, password } = req.body
 
         const user = await User.findOne({ email })
-        if (!user) return res.status(400).json({ message: 'User does not exists' })
+        if (!user) return res.status(400).json({ message: 'user does not exists' })
 
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch) return res.status(400).json({ message: 'incorrect password' })
@@ -70,7 +68,7 @@ router.post('/signin', signinValidation, async (req, res) => {
         res.json({ token })
 
     } catch (e) {
-        return res.status(500).json({ message: 'Something went wrong', error: e.message  })
+        return res.status(500).json({ message: 'something went wrong', error: e.message  })
     }
 })
 

@@ -1,14 +1,20 @@
 const express = require('express')
 const config = require('config')
 const mongoose = require('mongoose')
+const cors = require('cors');
+const authRoute = require('./routes/auth')
+const listsRoute = require('./routes/lists')
+
 const app = express()
 
-const authRoute = require('./routes/auth')
+app.use(cors());
+app.options('*', cors());
 
 const port = config.get('port')
 
 app.use(express.json({ extended: true }))
 app.use('/api/auth', authRoute)
+app.use('/api/lists', listsRoute)
 
 async function start() {
     try {

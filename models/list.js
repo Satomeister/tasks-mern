@@ -1,6 +1,14 @@
 const { Schema, model } = require('mongoose')
 
 const list = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     tasks: [
         {
             date: {
@@ -15,7 +23,7 @@ const list = new Schema({
             done: {
                 type: Boolean,
                 default: false
-            }
+            },
         },
     ]
 })

@@ -1,21 +1,42 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import useInput from '../hooks/useInput'
 import InputField from '../components/inputField'
+import useHttp from '../hooks/useHttp'
+import AuthContext from '../context/AuthContext'
+import { Redirect } from 'react-router-dom'
 
 const SignUp = () => {
+    const { login, userId } = useContext(AuthContext)
     const name = useInput()
     const email = useInput()
     const password = useInput()
     const confirm = useInput()
+    const { request, error, loading } = useHttp()
 
-    const submitHandler = event => {
+    const submitHandler = async event => {
         event.preventDefault()
+        const body = {
+            name: name.value,
+            email: email.value,
+            password: password.value,
+            confirm: confirm.value
+        }
+
+        try {
+            const data = await request('/auth/signup', 'POST', body)
+            login(data.token)
+        } catch (e) { }
     }
+
+    if (userId) return <Redirect to='/'/>
 
     return (
         <div className="row">
             <form className="col s6 offset-s3" onSubmit={submitHandler}>
                 <h1>Sign Up</h1>
+                {
+                    !!error && <div className='form-alert'>{error}</div>
+                }
                 <InputField
                     name='name'
                     type='text'
@@ -53,7 +74,7 @@ const SignUp = () => {
                         match: password
                     }}
                 />
-                <button className="btn primary-btn blue lighten-2">Sign up</button>
+                <button disabled={loading} className="btn primary-btn blue lighten-2">Sign up</button>
             </form>
         </div>
     )

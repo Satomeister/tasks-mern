@@ -1,0 +1,41 @@
+@import "vars";
+
+.header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: $header-height;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    background: $black;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: $white;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    li {
+        height: 100%;
+        a {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 15px;
+            color: $white;
+            transition: background-color .3s;
+            &:hover {
+                background-color: $blue-hover;
+                cursor: pointer;
+            }
+        }
+    }
+}

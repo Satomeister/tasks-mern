@@ -2,8 +2,8 @@ const { body } = require('express-validator/check')
 
 module.exports = {
     signup: [
-        body('email').normalizeEmail().isEmail().withMessage('email is invalid'),
         body('name').trim().isLength({ min: 3, max: 30 }).withMessage('name is invalid'),
+        body('email').normalizeEmail().isEmail().withMessage('email is invalid'),
         body('password').isAlphanumeric().isLength({ min: 6 }).withMessage('password is invalid'),
         body('confirm').custom((value, {req}) => {
             if (value !== req.body.password) {

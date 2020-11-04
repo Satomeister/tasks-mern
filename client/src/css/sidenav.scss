@@ -1,0 +1,92 @@
+@import "vars";
+
+.sidenav {
+    position: absolute;
+    top: $header-height;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background: $light-grey;
+    overflow: hidden;
+    transition: width .3s;
+    &:hover {
+        overflow-y: auto;
+    }
+}
+
+.burgerMenu {
+    margin: 15px;
+    padding: 5px;
+    border: none;
+    background: transparent;
+    outline: none;
+    &:hover {
+        background: #fdfdfd;
+        cursor: pointer;
+    }
+    svg {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.list__wrapper {
+    margin: 0 0 20px;
+}
+
+.sidenav-list {
+    width: 100%;
+    &__item {
+        width: 100%;
+        a {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            color: $fond-black;
+            span {
+                padding-left: 10px;
+            }
+            &:hover {
+                background: #fdfdfd;
+                cursor: pointer;
+            }
+            &.active {
+                background: #ededed;
+                color: $font-blue;
+                font-weight: 500;
+                cursor: default;
+            }
+        }
+    }
+}
+
+.addTopic__wrapper {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    input {
+        margin-left: 10px;
+        border: none;
+        background: none;
+        outline: none;
+        font-size: 16px;
+        &::placeholder {
+            color: $font-blue;
+        }
+        &:focus {
+            &::placeholder {
+                color: $placeholder-active;
+            }
+        }
+    }
+    &:hover {
+        background: #fdfdfd;
+        cursor: pointer;
+    }
+}
+
+.addTopic__icon {
+    color: $font-blue;
+}

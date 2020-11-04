@@ -14,10 +14,20 @@ const user = new Schema({
         type: String,
         required: true
     },
-    lists: {
-        type: Schema.ObjectId,
-        ref: 'List'
-    }
+    lists: [
+        {
+            list: {
+                type: Schema.Types.ObjectId,
+                ref: 'List',
+                required: true
+            }
+        }
+    ]
 })
+
+user.methods.addList = function(id) {
+    this.lists = [...this.lists, { list: id }]
+    this.save()
+}
 
 module.exports = model('User', user)
