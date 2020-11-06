@@ -7,13 +7,13 @@ const Lists = ({isShown, lists}) => {
         <>
             <ul className="sidenav-list list__wrapper">
                 <li className="sidenav-list__item">
-                    <NavLink to='/' activeClassName='active'>
+                    <NavLink to='/lists/general' activeClassName='active'>
                         <FaClipboardList/>
                         {isShown && <span>General</span>}
                     </NavLink>
                 </li>
                 <li className="sidenav-list__item">
-                    <NavLink to='/signin' activeClassName='active'>
+                    <NavLink to='/lists/important' activeClassName='active'>
                         <FaStar/>
                         {isShown && <span>Important</span>}
                     </NavLink>

@@ -10,17 +10,14 @@ const Routes = () => {
 
     return (
         <Switch>
-            <Route path='/'>
-                <Home />
-            </Route>
             <Route path='/signin' exact>
                 <SignIn />
             </Route>
             <Route path='/signup' exact>
                 <SignUp />
             </Route>
-            <Route path='/signup' exact>
-                <SignUp />
+            <Route path='/'>
+                <Home />
             </Route>
         </Switch>
     )

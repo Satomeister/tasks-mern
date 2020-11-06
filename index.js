@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors');
 const authRoute = require('./routes/auth')
 const listsRoute = require('./routes/lists')
+const todoRoute = require('./routes/todo')
 
 const app = express()
 
@@ -15,6 +16,7 @@ const port = config.get('port')
 app.use(express.json({ extended: true }))
 app.use('/api/auth', authRoute)
 app.use('/api/lists', listsRoute)
+app.use('/api/list', todoRoute)
 
 async function start() {
     try {

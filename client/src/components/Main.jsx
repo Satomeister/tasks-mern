@@ -1,25 +1,49 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { BiCheckCircle, BiCircle } from 'react-icons/bi'
 import { FaPlus } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 import useHttp from '../hooks/useHttp'
+import AuthContext from '../context/AuthContext'
+import useInput from '../hooks/useInput'
 
 const Main = () => {
+    const { userId } = useContext(AuthContext)
     const { listId } = useParams()
-    const { request } = useHttp()
     const [list, setList] = useState({})
+    const { request } = useHttp()
+    const taskInput = useInput()
 
     useEffect(() => {
         async function getList() {
             try {
-                const data = await request(`/lists/${listId}`)
-                setList(data)
+                if (listId === 'general') {
+                    const data = await request(`/list/general/${userId}`)
+                    setList(data)
+                } else if (listId === 'important') {
+                    const data = await request(`/list/important/${userId}`)
+                    setList(data)
+                } else {
+                    const data = await request(`/list/${listId}`)
+                    setList(data)
+                }
             } catch (e) {
                 console.log(e)
             }
         }
         getList()
-    }, [listId, request])
+    }, [listId, userId, request])
+
+    const addTask = async (event) => {
+        if (event.key === 'Enter') {
+            try {
+                const tasks = await request(`/list/${listId}/add`, 'POST', { task: taskInput.value, userId })
+                setList(prev => ({ ...prev, tasks }))
+                taskInput.clear()
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
 
     return (
         <div className='main'>
@@ -28,11 +52,11 @@ const Main = () => {
                 <li className='list__item-inputWrapper'>
                     <div className='list__item-input'>
                         <FaPlus size='1.5em'/>
-                        <input type="text" placeholder='add new task'/>
+                        <input { ...taskInput.bind } onKeyPress={addTask} type="text" placeholder='add new task'/>
                     </div>
                 </li>
                 {
-                    list.tasks && list.tasks.length > 0 && list.tasks.map(task => {
+                    list.tasks && list.tasks.length > 0 && list.tasks.concat().reverse().map(task => {
                         return(
                             <li key={task._id} className='list__item-wrapper'>
                                 <div className='list__item'>

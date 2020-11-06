@@ -12,7 +12,7 @@ const SideNav = () => {
     const [lists, setLists] = useState([])
     const input = useRef(null)
     const sidenav = useRef(null)
-    const addTopic = useInput()
+    const topicInput = useInput()
     const { request } = useHttp()
 
     const focus = () => {
@@ -22,7 +22,7 @@ const SideNav = () => {
     useEffect(() => {
         async function getLists() {
             try {
-                const data = await request('/lists', 'POST', { userId })
+                const data = await request(`/lists/${userId}`)
                 setLists(data.lists)
             } catch (e) {
                 console.log(e)
@@ -34,12 +34,13 @@ const SideNav = () => {
     const addList = async (event) => {
         if (event.key === 'Enter') {
             const body =  {
-                list: addTopic.value,
+                list: topicInput.value,
                 userId
             }
             try {
                 const data = await request('/lists/add', 'POST', body)
-                setLists([ ...lists, data ])
+                setLists(prev => [ ...prev, data ])
+                topicInput.clear()
             } catch (e) {
                 console.log(e)
             }
@@ -68,7 +69,7 @@ const SideNav = () => {
                 isShown &&
                 <div className='addTopic__wrapper'>
                     <FaPlus className='addTopic__icon' onClick={focus}/>
-                    <input {...addTopic.bind} onKeyPress={addList} ref={input} type="text" placeholder='add new list'/>
+                    <input {...topicInput.bind} onKeyPress={addList} ref={input} type="text" placeholder='add new list'/>
                 </div>
             }
         </div>

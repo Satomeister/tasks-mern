@@ -28,4 +28,9 @@ const list = new Schema({
     ]
 })
 
+list.methods.addTask = function(task){
+    this.tasks = [...this.tasks, { task }]
+    this.save()
+}
+
 module.exports = model('List', list)

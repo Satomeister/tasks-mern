@@ -3,21 +3,11 @@ const router = Router()
 const User = require('../models/user')
 const List = require('../models/list')
 
-router.post('/', async (req, res) => {
+router.get('/:userId', async (req, res) => {
     try {
-        const { userId } = req.body
+        const userId = req.params.userId
         const lists = await User.findById(userId).populate('lists.list', '_id title').select('lists')
         res.json(lists)
-    } catch (e) {
-        console.log(e)
-    }
-})
-
-router.get('/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-        const list = await List.findById(id)
-        res.json(list)
     } catch (e) {
         console.log(e)
     }

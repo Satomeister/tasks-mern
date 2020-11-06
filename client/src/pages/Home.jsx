@@ -8,7 +8,10 @@ const Home = () => {
         <div className='home'>
             <SideNav />
             <Switch>
-                <Route path='/lists/:listId'>
+                <Route path='/' exact>
+                    <Main />
+                </Route>
+                <Route path='/lists/:listId' exact>
                     <Main />
                 </Route>
             </Switch>
