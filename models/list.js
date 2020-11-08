@@ -11,20 +11,11 @@ const list = new Schema({
     },
     tasks: [
         {
-            date: {
-                type: Schema.Types.Date,
-                default: Date.now(),
-                required: true
-            },
             task: {
-                type: String,
-                required: true
-            },
-            done: {
-                type: Boolean,
-                default: false
-            },
-        },
+                type: Schema.Types.ObjectId,
+                ref: 'Task'
+            }
+        }
     ]
 })
 

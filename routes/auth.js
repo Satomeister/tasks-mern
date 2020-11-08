@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const config = require('config')
 const User = require('../models/user')
+const List = require('../models/list')
 const { validationResult } = require('express-validator')
 const { signup: signupValidation, signin: signinValidation } = require('../utils/validators')
 
@@ -26,9 +27,33 @@ router.post('/signup', signupValidation, async (req, res) => {
 
             const hashedPassword = await bcrypt.hash(password, 12)
 
-            const user = await new User({ email, password: hashedPassword, name, lists: [] })
-            user.save()
+            const user = await new User({
+                email,
+                password: hashedPassword,
+                name,
+                lists: [],
+                general: {},
+                important: {}
+            })
 
+            const general = await new List({
+                title: 'General',
+                user: user._id,
+                tasks: []
+            })
+
+            const important = await new List({
+                title: 'Important',
+                user: user._id,
+                tasks: []
+            })
+
+            general.save()
+            important.save()
+
+            user.setDefaultLists(general._id, important._id)
+
+            user.save()
             const token = jwt.sign(
                 { userId: user._id },
                 config.get('jwtSecret'),

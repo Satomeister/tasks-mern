@@ -22,8 +22,8 @@ const SideNav = () => {
     useEffect(() => {
         async function getLists() {
             try {
-                const data = await request(`/lists/${userId}`)
-                setLists(data.lists)
+                const lists = await request(`/lists/${userId}`)
+                setLists(lists)
             } catch (e) {
                 console.log(e)
             }
@@ -38,8 +38,8 @@ const SideNav = () => {
                 userId
             }
             try {
-                const data = await request('/lists/add', 'POST', body)
-                setLists(prev => [ ...prev, data ])
+                const list = await request('/lists/add', 'POST', body)
+                setLists(prev => [ ...prev, list ])
                 topicInput.clear()
             } catch (e) {
                 console.log(e)

@@ -17,14 +17,14 @@ const Main = () => {
         async function getList() {
             try {
                 if (listId === 'general') {
-                    const data = await request(`/list/general/${userId}`)
-                    setList(data)
+                    const list = await request(`/list/general/${userId}`)
+                    setList(list)
                 } else if (listId === 'important') {
-                    const data = await request(`/list/important/${userId}`)
-                    setList(data)
+                    const list = await request(`/list/important/${userId}`)
+                    setList(list)
                 } else {
-                    const data = await request(`/list/${listId}`)
-                    setList(data)
+                    const list = await request(`/list/${listId}`)
+                    setList(list)
                 }
             } catch (e) {
                 console.log(e)
@@ -36,8 +36,8 @@ const Main = () => {
     const addTask = async (event) => {
         if (event.key === 'Enter') {
             try {
-                const tasks = await request(`/list/${listId}/add`, 'POST', { task: taskInput.value, userId })
-                setList(prev => ({ ...prev, tasks }))
+                const task = await request(`/list/${list._id}/add`, 'POST', { task: taskInput.value })
+                setList(prev => ({ ...prev, tasks: [...prev.tasks, task] }))
                 taskInput.clear()
             } catch (e) {
                 console.log(e)

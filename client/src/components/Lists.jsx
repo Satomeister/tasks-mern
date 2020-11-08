@@ -22,12 +22,12 @@ const Lists = ({isShown, lists}) => {
 
             <ul className="sidenav-list">
                 {
-                    lists.length > 0 && lists.map(i => {
+                    lists.length > 0 && lists.map(list => {
                         return (
-                            <li key={i.list._id} className="sidenav-list__item">
-                                <NavLink to={`/lists/${i.list._id}`} activeClassName='active'>
+                            <li key={list._id} className="sidenav-list__item">
+                                <NavLink to={`/lists/${list._id}`} activeClassName='active'>
                                     <FaListUl/>
-                                    {isShown && <span>{i.list.title}</span>}
+                                    {isShown && <span>{list.title}</span>}
                                 </NavLink>
                             </li>
                         )

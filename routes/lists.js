@@ -6,7 +6,8 @@ const List = require('../models/list')
 router.get('/:userId', async (req, res) => {
     try {
         const userId = req.params.userId
-        const lists = await User.findById(userId).populate('lists.list', '_id title').select('lists')
+        const data = await User.findById(userId).populate('lists.list', '_id title').select('lists')
+        const lists = data.lists.map(list => list.list)
         res.json(lists)
     } catch (e) {
         console.log(e)
@@ -15,16 +16,20 @@ router.get('/:userId', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     try {
-        const { userId, list } = req.body
-        const newList = await new List({
-            title: list,
-            userId,
+        const { userId, list: listTitle } = req.body
+        const list = await new List({
+            title: listTitle,
+            user: userId,
             tasks: []
         })
-        newList.save()
+        list.save()
         const user = await User.findById(userId)
-        user.addList(newList._id)
-        res.json({ list: { _id: newList._id, title: newList.title } })
+        user.addList(list._id)
+        const result = {
+            _id: list._id,
+            title: list.title
+        }
+        res.json(result)
     } catch (e) {
         console.log(e)
     }

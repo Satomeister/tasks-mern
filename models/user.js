@@ -15,52 +15,16 @@ const user = new Schema({
         required: true
     },
     general: {
-        title: {
-            type: String,
-            default: 'general',
-            required: true
-        },
-        tasks: [
-            {
-                task: {
-                    type: String,
-                    required: true
-                },
-                data: {
-                    type: Schema.Types.Date,
-                    default: Date.now(),
-                    required: true
-                },
-                done: {
-                    type: Boolean,
-                    default: false
-                },
-            }
-        ]
+        list: {
+            type: Schema.Types.ObjectId,
+            ref: 'List'
+        }
     },
     important: {
-        title: {
-            type: String,
-            default: 'important',
-            required: true
-        },
-        tasks: [
-            {
-                task: {
-                    type: String,
-                    required: true
-                },
-                data: {
-                    type: Schema.Types.Date,
-                    default: Date.now(),
-                    required: true
-                },
-                done: {
-                    type: Boolean,
-                    default: false
-                },
-            }
-        ]
+        list: {
+            type: Schema.Types.ObjectId,
+            ref: 'List'
+        }
     },
     lists: [
         {
@@ -73,8 +37,14 @@ const user = new Schema({
     ]
 })
 
-user.methods.addList = function(id) {
-    this.lists = [...this.lists, { list: id }]
+user.methods.setDefaultLists = function(general, important) {
+    this.general = { list: general }
+    this.important = { list: important }
+    this.save()
+}
+
+user.methods.addList = function(list) {
+    this.lists = [...this.lists, { list }]
     this.save()
 }
 

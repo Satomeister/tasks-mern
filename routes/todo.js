@@ -2,36 +2,18 @@ const { Router } = require('express')
 const router = Router()
 const User = require('../models/user')
 const List = require('../models/list')
+const Task = require('../models/task')
 
 router.get('/:listId', async (req, res) => {
     try {
         const listId = req.params.listId
-        const list = await List.findById(listId)
-        res.json(list)
-    } catch (e) {
-        console.log(e)
-    }
-})
-
-router.post('/general/add', async (req, res) => {
-    try {
-        const task = req.body.task
-        const userId = req.body.userId
-        const user = await User.findById(userId)
-        user.addToGeneral(task)
-        res.json(user.general.tasks)
-    } catch (e) {
-        console.log(e)
-    }
-})
-
-router.post('/important/add', async (req, res) => {
-    try {
-        const task = req.body.task
-        const userId = req.body.userId
-        const user = await User.findById(userId)
-        user.addToImportant(task)
-        res.json(user.important.tasks)
+        const list = await List.findById(listId).populate('tasks.task')
+        const result = {
+            _id: list._id,
+            tasks: list.tasks.map(task => task.task),
+            title: list.title
+        }
+        res.json(result)
     } catch (e) {
         console.log(e)
     }
@@ -39,11 +21,16 @@ router.post('/important/add', async (req, res) => {
 
 router.post('/:listId/add', async (req, res) => {
     try {
-        const task = req.body.task
+        const taskValue = req.body.task
         const listId = req.params.listId
+        const task = new Task({
+            task: taskValue,
+            list: listId
+        })
+        task.save()
         const list = await List.findById(listId)
-        list.addTask(task)
-        res.json(list.tasks)
+        list.addTask(task._id)
+        res.json(task)
     } catch (e) {
         console.log(e)
     }
@@ -52,8 +39,13 @@ router.post('/:listId/add', async (req, res) => {
 router.get('/general/:userId', async (req, res) => {
     try {
         const userId = req.params.userId
-        const general = await User.findById(userId).select('general')
-        res.json(general.general)
+        const data = await User.findById(userId).populate({ path: 'general.list', populate: { path: 'tasks.task' } }).select('general')
+        const result = {
+            title: data.general.list.title,
+            _id: data.general.list._id,
+            tasks: data.general.list.tasks.map(task => task.task)
+        }
+        res.json(result)
     } catch (e) {
         console.log(e)
     }
@@ -62,8 +54,13 @@ router.get('/general/:userId', async (req, res) => {
 router.get('/important/:userId', async (req, res) => {
     try {
         const userId = req.params.userId
-        const important = await User.findById(userId).select('important')
-        res.json(important.important)
+        const data = await User.findById(userId).populate({ path: 'important.list', populate: { path: 'tasks.task' } }).select('important')
+        const result = {
+            title: data.important.list.title,
+            _id: data.important.list._id,
+            tasks: data.important.list.tasks.map(task => task.task)
+        }
+        res.json(result)
     } catch (e) {
         console.log(e)
     }
