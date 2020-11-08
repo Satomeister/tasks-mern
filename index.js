@@ -5,6 +5,7 @@ const cors = require('cors');
 const authRoute = require('./routes/auth')
 const listsRoute = require('./routes/lists')
 const todoRoute = require('./routes/todo')
+const taskRoute = require('./routes/task')
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(express.json({ extended: true }))
 app.use('/api/auth', authRoute)
 app.use('/api/lists', listsRoute)
 app.use('/api/list', todoRoute)
+app.use('/api/task', taskRoute)
 
 async function start() {
     try {

@@ -19,23 +19,6 @@ router.get('/:listId', async (req, res) => {
     }
 })
 
-router.post('/:listId/add', async (req, res) => {
-    try {
-        const taskValue = req.body.task
-        const listId = req.params.listId
-        const task = new Task({
-            task: taskValue,
-            list: listId
-        })
-        task.save()
-        const list = await List.findById(listId)
-        list.addTask(task._id)
-        res.json(task)
-    } catch (e) {
-        console.log(e)
-    }
-})
-
 router.get('/general/:userId', async (req, res) => {
     try {
         const userId = req.params.userId
@@ -61,6 +44,23 @@ router.get('/important/:userId', async (req, res) => {
             tasks: data.important.list.tasks.map(task => task.task)
         }
         res.json(result)
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router.post('/:listId/add', async (req, res) => {
+    try {
+        const taskValue = req.body.task
+        const listId = req.params.listId
+        const task = new Task({
+            task: taskValue,
+            list: listId
+        })
+        task.save()
+        const list = await List.findById(listId)
+        list.addTask(task._id)
+        res.json(task)
     } catch (e) {
         console.log(e)
     }

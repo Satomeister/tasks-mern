@@ -1,0 +1,62 @@
+@import "vars";
+
+.tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 7px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: $light-grey;
+    width: 100px;
+    text-align: center;
+    font-size: 12px;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 10px #777;
+    opacity: 0;
+    z-index: 10;
+    transition: opacity .2s;
+}
+
+.tooltip.top {
+    bottom: 130%;
+    transform: translateX(-50%);
+    left: 50%;
+}
+
+.tooltip.bottom {
+    top: 130%;
+    transform: translateX(-50%);
+    left: 50%;
+}
+
+.tooltip.right {
+    left: 130%;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+
+.tooltip.left {
+    right: 130%;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+
+.tooltip.top-right {
+    bottom: 110%;
+    left: 90%;
+}
+
+.tooltip.visible {
+   opacity: 1;
+   transition-delay: .5s;
+}
+
+.targetElement {
+    cursor: pointer;
+}
