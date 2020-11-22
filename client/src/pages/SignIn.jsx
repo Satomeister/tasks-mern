@@ -19,20 +19,19 @@ const SignIn = () => {
         } catch (e) { }
     }
 
-    if (userId) return <Redirect to='/'/>
+    if (userId) return <Redirect to='/lists/general'/>
 
     return (
-        <div className="row">
-            <form className="col s6 offset-s3" onSubmit={submitHandler}>
-                <h1>Sign In</h1>
+        <div className='form-wrapper'>
+            <form className='form' onSubmit={submitHandler}>
+                <h1 className='form__title'>Sign In</h1>
                 {
-                    !!error && <div className='form-alert'>{error}</div>
+                    !!error && <div className='form__alert'>{error}</div>
                 }
                 <InputField
                     name='email'
                     type='text'
                     input={email}
-                    placeholder='Your email'
                     validators={{
                         email: true
                     }}
@@ -41,9 +40,8 @@ const SignIn = () => {
                     name='password'
                     type='password'
                     input={password}
-                    placeholder='Your password'
                 />
-                <button disabled={loading} className="btn primary-btn blue lighten-2">Sign in</button>
+                <button disabled={loading} className='form__submit-button'>Sign in</button>
             </form>
         </div>
     )

@@ -4,22 +4,35 @@
     position: absolute;
     top: $header-height;
     left: var(--sidebar-width);
-    right: 0;
+    right: var(--taskInfo-width);
     bottom: 0;
-    padding: 30px 0 0 5px;
+    border: 1px solid $border-grey;
     transition: left .3s;
-    overflow-y: auto;
+    &-top {
+        position: absolute;
+        top: 30px;
+        right: 0;
+        left: 0;
+        height: 11%;
+    }
+    &-bottom {
+        position: absolute;
+        top: calc(11% + 39px);
+        bottom: 0;
+        right: 0;
+        left: 0;
+        overflow-y: auto;
+    }
 }
 
 .main__title {
-    padding-left: 30px;
+    margin-left: 30px;
+    margin-bottom: 10px;
     color: $font-blue;
     font-weight: 600;
 }
 
-.list {
-    margin-top: 20px;
-}
+.list { }
 
 .list__item-wrapper {
     padding: 15px 15px 0 15px;
@@ -47,12 +60,32 @@
     display: flex;
     align-items: center;
     padding-bottom: 15px;
-    border-bottom: 1px solid rgba(grey, .3);
+    border-bottom: 1px solid rgba($grey, .3);
     svg {
         color: $font-blue
     }
     &-text {
+        display: block;
+        max-width: 100%;
         margin-left: 15px;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+
+    }
+    &-term {
+        display: flex;
+        align-items: center;
+        margin-left: 15px;
+        font-size: 12px;
+        color: $font-blue;
+        svg {
+            margin-top: -1.5px;
+            margin-right: 3px;
+        }
+        &.exp {
+            color: red;
+            svg { color: red }
+        }
     }
 }
 

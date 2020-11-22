@@ -9,6 +9,11 @@ const list = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    taskCount: {
+      type: Number,
+      default: 0,
+      required: true
+    },
     tasks: [
         {
             task: {
@@ -21,6 +26,13 @@ const list = new Schema({
 
 list.methods.addTask = function(task){
     this.tasks = [...this.tasks, { task }]
+    this.taskCount = ++this.taskCount
+    this.save()
+}
+
+list.methods.deleteTask = function(id){
+    this.tasks = this.tasks.filter(task => task.task._id.toString() !== id.toString())
+    this.taskCount = --this.taskCount
     this.save()
 }
 

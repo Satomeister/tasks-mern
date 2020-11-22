@@ -22,13 +22,6 @@ const useValidation = (value, validators = {}, focused) => {
                             delete obj[key]
                         }
                         break
-                    case 'required':
-                        if (value.trim().length === 0) {
-                            obj[key] = `this input is required`
-                        } else {
-                            delete obj[key]
-                        }
-                        break
                     case 'email':
                         if (!value.trim().match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
                             obj[key] = `email is invalid`

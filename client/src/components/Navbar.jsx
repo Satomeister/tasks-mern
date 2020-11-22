@@ -15,7 +15,7 @@ const Navbar = () => {
     if (!userId) {
         return (
             <nav className='header'>
-                <Link to="/" className="logo">UTasks</Link>
+                <Link to="/lists/general" className="logo">UTasks</Link>
                 <ul className='navbar'>
                     <li><NavLink to='/signup'>Sign Up</NavLink></li>
                     <li><NavLink to="/signin">Sign In</NavLink></li>
@@ -26,7 +26,7 @@ const Navbar = () => {
 
     return (
         <nav className='header'>
-            <Link to="/" className="logo">UTasks</Link>
+            <Link to="/lists/general" className="logo">UTasks</Link>
             <ul className='navbar'>
                 <li><a href='/' onClick={logoutHandler}>Sign out</a></li>
             </ul>

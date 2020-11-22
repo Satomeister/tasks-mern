@@ -6,7 +6,7 @@ const List = require('../models/list')
 router.get('/:userId', async (req, res) => {
     try {
         const userId = req.params.userId
-        const data = await User.findById(userId).populate('lists.list', '_id title').select('lists')
+        const data = await User.findById(userId).populate('lists.list', '_id title taskCount').select('lists')
         const lists = data.lists.map(list => list.list)
         res.json(lists)
     } catch (e) {

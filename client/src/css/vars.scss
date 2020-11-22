@@ -1,14 +1,22 @@
 // colors
-$black: #000;
-$white: #FFFFFF;
-$blue-hover: #0078D7;
-$light-grey: #F4F4F4;
+$strong-black: #000;
+$black: #34373d;
+$white: #fff;
+$blue-hover: #0078d7;
+$grey: #777;
+$light-grey: #f4f4f4;
+$hover-grey: #f5f5f5;
+$border-grey: #eaeaea;
 $fond-black: #34373d;
 $font-blue: #3e69e4;
 $placeholder-active: #808080;
-$hover-grey: #F5F5F5;
+$red: #ff6347;
 
 // sizes
 $header-height: 50px;
-$sidebar-width: 20%;
+// vanilla css var for js manipulations
+:root {
+    --sidebar-width: 20%;
+    --taskInfo-width: 0;
+}
 

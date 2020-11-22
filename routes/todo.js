@@ -4,12 +4,18 @@ const User = require('../models/user')
 const List = require('../models/list')
 const Task = require('../models/task')
 
-router.get('/:listId', async (req, res) => {
+router.get('/custom/:userId/:listId', async (req, res) => {
     try {
         const listId = req.params.listId
+        const userId = req.params.userId
         const list = await List.findById(listId).populate('tasks.task')
+
+        if (!list || list.user.toString() !== userId.toString()) {
+            return res.status(404).json({ message: 'list is not found' })
+        }
         const result = {
             _id: list._id,
+            taskCount: list.taskCount,
             tasks: list.tasks.map(task => task.task),
             title: list.title
         }
@@ -25,6 +31,7 @@ router.get('/general/:userId', async (req, res) => {
         const data = await User.findById(userId).populate({ path: 'general.list', populate: { path: 'tasks.task' } }).select('general')
         const result = {
             title: data.general.list.title,
+            taskCount: data.general.list.taskCount,
             _id: data.general.list._id,
             tasks: data.general.list.tasks.map(task => task.task)
         }
@@ -40,6 +47,7 @@ router.get('/important/:userId', async (req, res) => {
         const data = await User.findById(userId).populate({ path: 'important.list', populate: { path: 'tasks.task' } }).select('important')
         const result = {
             title: data.important.list.title,
+            taskCount: data.important.list.taskCount,
             _id: data.important.list._id,
             tasks: data.important.list.tasks.map(task => task.task)
         }

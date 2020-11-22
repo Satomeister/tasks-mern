@@ -17,6 +17,7 @@
     box-sizing: border-box;
     box-shadow: 1px 1px 10px #777;
     opacity: 0;
+    visibility: hidden;
     z-index: 10;
     transition: opacity .2s;
 }
@@ -52,7 +53,13 @@
     left: 90%;
 }
 
+.tooltip.bottom-right {
+    top: 110%;
+    left: 90%;
+}
+
 .tooltip.visible {
+   visibility: visible;
    opacity: 1;
    transition-delay: .5s;
 }

@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react'
+import { Redirect, useHistory } from 'react-router-dom'
+import AuthContext from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Routes from './components/Routes'
-import AuthContext from './context/AuthContext'
 import useAuth from './hooks/useAuth'
-import Preloader from './components/Preloader'
-import { Redirect } from 'react-router-dom'
 
 const App = () => {
     const { userId, init, login, logout, ready } = useAuth()
+    const history = useHistory()
 
     useEffect(() => {
         init()
+        if (history.location.pathname === '/') {
+            history.push('/lists/general')
+        }
     }, [])
 
-    if (!ready) return <Preloader />
+    if (!ready) return null
 
     return (
         <AuthContext.Provider value={{

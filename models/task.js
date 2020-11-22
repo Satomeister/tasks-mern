@@ -6,10 +6,26 @@ const task = new Schema({
       ref: 'List',
       required: false
     },
+    steps: [
+        {
+            step: {
+                type: String,
+                required: true
+            }
+        }
+    ],
     date: {
         type: Schema.Types.Date,
-        default: Date.now(),
+        default: Date.now,
         required: true
+    },
+    term: {
+        title: {
+            type: String,
+        },
+        date: {
+            type: String,
+        }
     },
     task: {
         type: String,
@@ -20,5 +36,15 @@ const task = new Schema({
         default: false
     },
 })
+
+task.methods.addStep = function(step) {
+    this.steps = [...this.steps, { step }]
+    this.save()
+}
+
+task.methods.deleteStep = function(id) {
+    this.steps = this.steps.filter(step =>  step._id.toString() !== id.toString())
+    this.save()
+}
 
 module.exports = model('Task', task)

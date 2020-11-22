@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 
-const Tooltip = ({ children, content, position }) => {
+const Tooltip = forwardRef(({ children, content, position }, ref) => {
     const [visible, setVisible] = useState(false)
 
     const show = () => {
@@ -14,15 +14,16 @@ const Tooltip = ({ children, content, position }) => {
     const style = `tooltip ${position} ${visible && 'visible'}`
 
     return (
-        <div className='tooltip-wrapper'>
+        <div className='tooltip-wrapper unselectable'>
             <span className={style}>{ content }</span>
             <span
                 className='targetElement'
                 onMouseEnter={show}
                 onMouseLeave={hide}
+                ref={ref}
             >{ children }</span>
         </div>
     )
-}
+})
 
 export default Tooltip

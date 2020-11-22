@@ -2,9 +2,9 @@ const { body } = require('express-validator/check')
 
 module.exports = {
     signup: [
-        body('name').trim().isLength({ min: 3, max: 30 }).withMessage('name is invalid'),
-        body('email').normalizeEmail().isEmail().withMessage('email is invalid'),
-        body('password').isAlphanumeric().isLength({ min: 6 }).withMessage('password is invalid'),
+        body('name').trim().isLength({ min: 3, max: 30 }).withMessage('invalid name'),
+        body('email').normalizeEmail().isEmail().withMessage('invalid email'),
+        body('password').isAlphanumeric().isLength({ min: 6 }).withMessage('invalid password, must be minimum of 6 chars'),
         body('confirm').custom((value, {req}) => {
             if (value !== req.body.password) {
                 throw new Error('Passwords do not match')
@@ -13,7 +13,7 @@ module.exports = {
         })
     ],
     signin: [
-        body('email').normalizeEmail().isEmail().withMessage('email is invalid'),
-        body('password').isLength({ min: 6 }).withMessage('password is invalid')
+        body('email').normalizeEmail().isEmail().withMessage('invalid email'),
+        body('password').isLength({ min: 6 }).withMessage('invalid password, must be minimum of 6 chars')
     ]
 }

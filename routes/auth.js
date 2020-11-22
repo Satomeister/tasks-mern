@@ -38,17 +38,15 @@ router.post('/signup', signupValidation, async (req, res) => {
 
             const general = await new List({
                 title: 'General',
-                user: user._id,
-                tasks: []
-            })
-
-            const important = await new List({
-                title: 'Important',
-                user: user._id,
-                tasks: []
+                user: user._id
             })
 
             general.save()
+
+            const important = await new List({
+                title: 'Important',
+                user: user._id
+            })
             important.save()
 
             user.setDefaultLists(general._id, important._id)

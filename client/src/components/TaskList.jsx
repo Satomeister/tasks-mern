@@ -1,29 +1,23 @@
 import React from 'react'
 import Task from './Task'
 
-const TaskList = ({ list, setList }) => {
+const TaskList = ({ list }) => {
 
-    const updateList = (id) => {
-        setList(prev => ({
-            ...prev,
-            tasks: prev.tasks.map(t => {
-                if (t._id === id) {
-                    return { ...t, done: !t.done }
-                } else return t
-            })
-        }))
-    }
+    const tasks = list.tasks && list.tasks.length > 0 && list.tasks.concat().reverse()
 
     return (
-        <>
+        <ul className='list'>
             {
-                list.tasks && list.tasks.length > 0 && list.tasks.concat().reverse().map(task => {
+                tasks && tasks.map(task => {
                     return (
-                        <Task key={task._id} task={task} updateList={updateList}/>
+                        <Task
+                            key={task._id}
+                            task={task}
+                        />
                     )
                 })
             }
-        </>
+        </ul>
     )
 }
 

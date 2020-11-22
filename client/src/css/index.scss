@@ -1,12 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 @import "vars";
-@import "header";
 @import "general";
+@import "header";
+@import "form";
 @import "sidenav";
 @import "main";
+@import "taskInfo";
 @import "tooltip";
 
-// vanilla css var for js manipulations
-:root {
-    --sidebar-width: 20%;
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.page-404 {
+    position: absolute;
+    left: var(--sidebar-width);
+    top: $header-height;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-404 {
+    padding: 0 20px 20px 20px;
+    text-align: center;
+    color: $font-blue;
+}
+
+.text-404 {
+    text-align: center;
+    padding: 10px;
 }
